@@ -96,6 +96,34 @@ class SingleLikedList{
         }
     }
 
+    /**
+     *  删除节点
+     *  1， 先找到需要删除的节点
+     *  2， temp.next = temp.next.next;
+     *  3, 被删除的节点， 将不会有其他任何引用指向， 会被jvm垃圾回收机制回收
+     * */
+    public void del(int no){
+        HeroNode temp = head;
+        boolean flag = false; // 标示是否找到待删除节点
+        while(true){
+            if(temp.next == null){ // 链表最后节点
+                break;
+            }
+            if(temp.next.no == no){ // 目标删除节点的前一个节点temp
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        if(flag){
+            temp.next = temp.next.next;
+        }else {
+            System.out.printf("要删除的%d节点不存在\n", no);
+        }
+    }
+
+
 }
 
 // 定义节点， 每个节点对象为一个节点

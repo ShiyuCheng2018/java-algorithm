@@ -14,5 +14,11 @@ public class SingleLinkedListDemo {
         singleLinkedList.add(hero_4);
 
         singleLinkedList.list();
+
+        singleLinkedList.del(2);
+
+        System.out.println("删除后链表情况");
+        singleLinkedList.list();
+
     }
 }
