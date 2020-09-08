@@ -52,6 +52,33 @@ class SingleLikedList{
         }
     }
 
+    public void update(HeroNode newHeroNode){
+        if(head.next == null){
+            System.out.println("链表为空");
+            return;
+        }
+        // 找到需要修改动节点， 根据编号
+        HeroNode temp = head.next;
+        boolean flag = false;
+        while(true){
+            if(temp == null){ // 链表最后节点， 遍历完毕
+                break;
+            }
+            if(temp.no == newHeroNode.no){ // 目标节点
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        // 根据flag判断是否找到目标节点
+        if(flag){
+            temp.name = newHeroNode.name;
+            temp.nickName = newHeroNode.nickName;
+        }else {
+            System.out.printf("没有找到编号 %d 的节点， 不能修改\n", newHeroNode.no);
+        }
+    }
+
     public void list(){
         // 判断链表是否为空
         if(head.next == null) {
