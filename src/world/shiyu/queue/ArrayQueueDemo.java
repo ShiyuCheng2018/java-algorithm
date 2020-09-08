@@ -1,7 +1,61 @@
 package world.shiyu.queue;
 
+import java.util.Scanner;
+
 public class ArrayQueueDemo {
     public static void main(String[] args){
+        ArrayQueue arrayQueue = new ArrayQueue(3);
+        char key;
+        Scanner scanner = new Scanner(System.in);
+        boolean loop = true;
+        System.out.println("System online.");
+
+        while(loop){
+            System.out.println("s(show): show the queue");
+            System.out.println("e(exit): exit the app");
+            System.out.println("a(add):  add data to the queue");
+            System.out.println("g(get):  get data from the queue");
+            System.out.println("h(head): show the queue's head");
+            key = scanner.next().charAt(0);
+            switch (key){
+                case 's':
+                    arrayQueue.showQueue();
+                    break;
+                case 'a':
+                    try {
+                        System.out.print("Please type a number: ");
+                        int value = scanner.nextInt();
+                        arrayQueue.addQueue(value);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 'g':
+                    try {
+                        int result = arrayQueue.getQueue();
+                        System.out.printf("You just got the data: %d\n", result);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 'h':
+                    try{
+                        int result = arrayQueue.peekqueue();
+                       System.out.printf("You just peaked the data head: %d\n", result);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 'e':
+                    scanner.close();
+                    loop = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        System.out.println("System offline.");
 
     }
 }
@@ -30,7 +84,7 @@ class ArrayQueue{
     public void addQueue(int n){
         // is the queue full?
         if(isFull()){
-            System.out.println("The queue is full!");
+            throw new RuntimeException("The queue is full!");
         }
         rear++; // move rear with one index behind
         arr[rear] = n;
