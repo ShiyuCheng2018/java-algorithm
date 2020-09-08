@@ -4,6 +4,9 @@ package world.shiyu.linkedlist;
 class SingleLikedList{
     private HeroNode head = new HeroNode(0, "", ""); // 初始化头节点， 不存在具体数据
 
+    public HeroNode getHead(){
+        return head;
+    }
 
     // 添加节点到单向链表
     // 思路， 当不考虑编号顺序时。
@@ -122,8 +125,6 @@ class SingleLikedList{
             System.out.printf("要删除的%d节点不存在\n", no);
         }
     }
-
-
 }
 
 // 定义节点， 每个节点对象为一个节点
