@@ -63,7 +63,7 @@ public class CircleArrayQueueDemo {
 
 class CircleArrayQueue{
     private int maxSize;
-    private int front; // front 指向队列的第一个元素， 也就是说arr[front], 初始值为0.
+    private int front; // front指向队列的第一个元素， 也就是说arr[front], 初始值为0.
     private int rear; // rear指向队列最后一个元素的后一个位置， 因为希望空出一个空间最为约定， 初始值为0.
     private int[] arr;
 
@@ -75,7 +75,7 @@ class CircleArrayQueue{
     }
 
     public boolean isFull(){
-        return (rear + 1) % maxSize == front;
+        return (rear + 1) % maxSize == front; // 下一个元素等于front了， 那自然就满了
     }
 
     public boolean isEmpty(){
@@ -88,7 +88,7 @@ class CircleArrayQueue{
             throw new RuntimeException("The queue is full!");
         }
         arr[rear] = n;
-        rear = (rear + 1) % maxSize; // 将rear后移， 这里必须考虑取模, 这样子保证了不越界
+        rear = (rear + 1) % maxSize; // 将rear后移， 这里必须考虑取模, 下一个元素的位置
     }
 
     public int getQueue(){
@@ -101,7 +101,7 @@ class CircleArrayQueue{
         // 2，再将front后移, 考虑取摸
         // 3，将临时保存的变量返回
         int value = arr[front];
-        front = (front + 1) % maxSize;
+        front = (front + 1) % maxSize; // front的下一个元素位置
         return value;
     }
 
@@ -120,7 +120,7 @@ class CircleArrayQueue{
         // rear = 2;
         // front = 1;
         // maxSize = 3;
-        return (rear + maxSize - front) % maxSize;
+        return (rear + maxSize - front) % maxSize; // 考虑到了rear可能会小于front， 所以加个maxsize
     }
 
     public int peekqueue(){
