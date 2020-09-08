@@ -24,6 +24,34 @@ class SingleLikedList{
         temp.next = heroNode;
     }
 
+    public void addByOrder(HeroNode heroNode){
+        // 因为头节点不能动， 依然通过辅助指针（变量）来帮助找到加入位置
+        // temp位于添加位置动前一个节点
+        HeroNode temp = head;
+        boolean flag = false; // 标示添加编号是否存在， 默认为false
+        while(true){
+            if(temp.next == null){ // 说明temp已经在链表最后
+                break;
+            }
+            if(temp.next.no > heroNode.no){ // target位置找到， 后面一位index为target
+                break;
+            }else if(temp.next.no == heroNode.no){ // 编号已经存在
+                flag = true;
+                break;
+            }
+            temp = temp.next; // temp后移，遍历链表
+        }
+
+        // 判断flag值
+        if(flag){
+            System.out.println("已存在编号: "+ heroNode.no);
+        }else {
+            // 插入链表, temp后面
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+        }
+    }
+
     public void list(){
         // 判断链表是否为空
         if(head.next == null) {
