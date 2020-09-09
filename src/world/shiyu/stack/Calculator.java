@@ -3,7 +3,7 @@ package world.shiyu.stack;
 public class Calculator {
 
     public static void main(String[] args) {
-        String expression = "3+2*6-2*7+8-5+6";
+        String expression = "70+3*6+20";
         // 创建数栈与符号栈
         ArrayStack_2 numStack = new ArrayStack_2(10);
         ArrayStack_2 operStack = new ArrayStack_2(10);
@@ -14,6 +14,7 @@ public class Calculator {
         int oper = 0;
         int res = 0;
         char ch = ' ';
+        String keepNum = ""; // 用于拼接多位数字
 
         while (true) {
             // 依次得到expression的每一个字符
@@ -40,9 +41,24 @@ public class Calculator {
                     operStack.push(ch);
                 }
             } else {
-                // 如果是数， 则直接入栈
-                numStack.push(ch - 48);
+                // 可能是多位数字， 在处理数字时，需要像expression当表达式index后再看一位， 如果是数就进行扫描， 如果是符号就入栈
+                // 需要定义一个字符串变量用于拼接
+                keepNum += ch;
+
+                // 如果ch已经是expression当最后一位，直接入栈
+                if (index == expression.length() - 1) {
+                    numStack.push(Integer.parseInt(keepNum));
+                } else {
+                    // 判断下一个数字是否为数字， 如果是数字则继续扫描， 如果是运算符就入栈
+                    if (operStack.isOper(expression.substring(index + 1, index + 2).charAt(0))) {
+                        // 判断为操作符
+                        numStack.push(Integer.parseInt(keepNum));
+                        keepNum = "";
+                    }
+                }
+
             }
+
             index++;
 
             if (index >= expression.length()) {
