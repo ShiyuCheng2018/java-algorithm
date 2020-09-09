@@ -5,6 +5,10 @@ public class JosephuDemo {
         CircleSingleLinkedList csll = new CircleSingleLinkedList();
         csll.addBoys(5);
         csll.showBoys();
+
+        // 测试小孩出圈 约瑟夫环
+        csll.countBoy(1, 2, 5);
+
     }
 }
 
@@ -55,12 +59,56 @@ class CircleSingleLinkedList {
             curBoy = curBoy.getNext(); // curBoy后移
         }
     }
+
+
+    /**
+     * 根据用户的输入，计算出小孩出圈的顺序
+     *
+     * @param countNumber : 表示每次数几下
+     * @param startNo : 表示从第几个小孩开始数数
+     * @param nums : 表示起始一共有多少个小孩
+     * */
+    public void countBoy(int startNo, int countNumber, int nums) {
+        if (first == null || startNo < 1 || startNo > nums) {
+            System.out.println("参数输入有误， 请重新输入");
+            return;
+        }
+        // 创建辅助指针帮助完成行为
+        Boy helper = first;
+        while (true) {
+            if (helper.getNext() == first) { // 说明helper指向最后小孩节点
+                break;
+            }
+            helper = helper.getNext();
+        }
+        // 小孩报数时， 先让first和helper移动startNo-1次。
+        for(int j=0; j<startNo-1; j++){
+            first = first.getNext();
+            helper = helper.getNext();
+        }
+        // 循环出圈操作
+        while (true){
+            if(helper == first){ // 圈中只有一个人
+                break;
+            }
+            // 让first和helper同时移动countNum - 1
+            for(int j=0; j<countNumber-1; j++){
+                first = first.getNext();
+                helper = helper.getNext();
+            }
+            // 这时first指向节点即为出圈节点
+            System.out.printf("小孩出圈节点： %d \n", first.no);
+            first = first.getNext();
+            helper.setNext(first);
+        }
+        System.out.printf("最后留在圈中的小孩编号为： %d \n", first.getNo());
+    }
 }
 
 // 定义节点， 每个节点对象为一个节点
 class Boy {
     public int no;
-    public Boy next; // 指向下一个节点, null
+    private Boy next; // 指向下一个节点, null
 
     public Boy(int no) {
         this.no = no;
