@@ -1,5 +1,7 @@
 package world.shiyu.linkedlist;
 
+import java.util.Stack;
+
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
         HeroNode hero_1 = new HeroNode(1, "宋江", "及时雨");
@@ -91,4 +93,30 @@ public class SingleLinkedListDemo {
         //  将head.next指向reverseHead.next, 实现单链表单反转
         head.next = reversedHead.next;
     }
+
+    /**
+     * 从尾到头打印单链表 （百度）
+     * 思路：
+     * 1， 逆序打印单链表
+     * 方法一： 先将单链表进行反转操作， 在遍历打印即可，然而题目并没有要求逆转原有链表哦结构， 不建议。
+     * 方法二： 可以利用栈这个数据结构， 将各个节点压入栈中， 然后利用栈的先进后出的特点， 就实现了逆序打印效果。
+     * */
+     public static void reversePrint(HeroNode head){
+         if(head.next == null){ // 空链表，无法打印
+             return;
+         }
+         //  创建一个栈， 将各个节点压入栈中
+         Stack<HeroNode> stack = new Stack<HeroNode>();
+         HeroNode cur = head.next;
+         // 将链表的所有节点压入栈中
+         while(cur != null){
+             stack.push(cur);
+             cur = cur.next; // 继续遍历链表
+         }
+         // 将栈中的节点进行打印， pop出栈
+         while(stack.size()>0){
+             System.out.println(stack.pop());
+         }
+
+     }
 }
