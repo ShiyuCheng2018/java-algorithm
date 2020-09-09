@@ -1,6 +1,28 @@
 package world.shiyu.linkedlist;
 
 public class DoubleLinkedlistDemo {
+
+    public static void main(String[] args) {
+        Node hero_1 = new Node(1, "宋江", "及时雨");
+        Node hero_2 = new Node(2, "卢俊义", "玉麒麟");
+        Node hero_3 = new Node(3, "吴用", "智多星");
+        Node hero_4 = new Node(4, "林冲", "豹子头");
+
+        DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+        doubleLinkedList.add(hero_1);
+        doubleLinkedList.add(hero_2);
+        doubleLinkedList.add(hero_3);
+        doubleLinkedList.add(hero_4);
+
+        doubleLinkedList.list();
+
+        doubleLinkedList.del(2);
+
+        System.out.println("删除后链表情况");
+        doubleLinkedList.list();
+
+    }
+
 }
 
 class DoubleLinkedList {
@@ -26,6 +48,9 @@ class DoubleLinkedList {
             temp = temp.next;
         }
     }
+
+    /**TODO: 按序添加双向链表节点
+     * */
 
 
     // 添加节点到双向链表
