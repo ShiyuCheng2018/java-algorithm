@@ -106,7 +106,7 @@ class SingleLikedList {
      * 3, 被删除的节点， 将不会有其他任何引用指向， 会被jvm垃圾回收机制回收
      */
     public void del(int no) {
-        HeroNode temp = head;
+        HeroNode temp = head; // 指示待删除节点的上一个节点
         boolean flag = false; // 标示是否找到待删除节点
         while (true) {
             if (temp.next == null) { // 链表最后节点
