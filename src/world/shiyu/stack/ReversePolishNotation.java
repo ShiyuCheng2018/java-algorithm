@@ -6,10 +6,26 @@ import java.util.Stack;
 
 public class ReversePolishNotation {
     public static void main(String[] args) {
+
+        /** 将一个中缀表达式转为后缀表达式
+         *  说明
+         *  1, 1+((2+3)*4)-5 => 1 2 3 + 4 * + 5
+         *  2, 因为直接对一个字符串进行操作不方便， 因此现将这个字符串转成中缀表达式对应对list
+         *  即ArrayList【1, +, (, (, 2, +, 3, ), *, 4, ), -, 5 】
+         *
+         * */
+
+        String expression = "1+((2+3)*4)-5";
+        List<String> infixExpressionList = toInfixExpressionList(expression);
+        System.out.println(infixExpressionList);
+
+
+
+
         // 先定义一个逆波兰表达式
         // (3+4)*5-6 = 3 4 + 5 * 6 -
         // 说明： 为了方便数字和符号在逆波兰表达式空格隔开
-        String suffixExpression = "3 4 + 5 * 6 -";
+//        String suffixExpression = "3 4 + 5 * 6 -";
 
         /**
          * 思路：
@@ -17,12 +33,39 @@ public class ReversePolishNotation {
          * 2, 将ArrayList 传递给一个方法， 遍历列表配合栈完成计算
          *
          * */
-        List<String> rpnList = getListString(suffixExpression);
-
-        int result = calculate(rpnList);
-        System.out.printf(suffixExpression.strip()+" = %d\n", result);
+//        List<String> rpnList = getListString(suffixExpression);
+//
+//        int result = calculate(rpnList);
+//        System.out.printf(suffixExpression.strip()+" = %d\n", result);
 
     }
+
+    // 将中缀表达式转成对应对list
+    public static List<String> toInfixExpressionList(String s){
+      // 先定义一个List， 存放中缀表达对应对内容
+
+        List<String> ls = new ArrayList<String>();
+        int i = 0; // 这是一个指针， 用于遍历中缀表达式字符串
+        String str; // 对多位数对拼接
+        char c; // 没遍历一个字符， 放入c
+
+        do{
+            // 如果c为非数字， 我们就需要加入到ls
+            if((c = s.charAt(i)) < 48 || (c = s.charAt(i)) > 57){
+                ls.add(""+c);
+                i++;
+            }else {
+                str=""; // 先将str制成空串 '0'[48] -> '9'[57]
+                while(i < s.length() && (c = s.charAt(i)) >= 48 && (c = s.charAt(i)) <= 57){
+                    str += c;
+                    i++;
+                }
+                ls.add(str);
+            }
+
+        }while (i < s.length());
+        return ls;
+    };
 
     // 将一个逆波兰表达式， 依次把数据放入列表
     public static List<String> getListString(String suffixExpression) {
@@ -86,6 +129,5 @@ public class ReversePolishNotation {
         }
         return res;
     }
-
 
 }
