@@ -30,16 +30,8 @@ public class ReversePolishNotation {
         List<String> parsedSuffixExpressionList = toParseSuffixExpressionList(infixExpressionList);
         System.out.println("逆波兰表达式列表: " + parsedSuffixExpressionList);
 
-        /**
-         * 思路：
-         * 1, 先将"3 4 + 5 * 6 -"放进ArrayList
-         * 2, 将ArrayList 传递给一个方法， 遍历列表配合栈完成计算
-         *
-         * */
-//        List<String> rpnList = getListString(suffixExpression);
-//
-//        int result = calculate(rpnList);
-//        System.out.printf(suffixExpression.strip()+" = %d\n", result);
+        int result = calculate(parsedSuffixExpressionList);
+        System.out.printf(expression.strip()+" = %d\n", result);
 
     }
 
