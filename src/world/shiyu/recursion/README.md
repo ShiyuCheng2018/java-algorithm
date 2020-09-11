@@ -10,21 +10,25 @@
 
 1. 打印问题
 ~~~java
-public static void test(int n){
-    if(n>2){
-        test(n-1);
-    }
-    System.out.print("n = "+n);
+class Print{
+    public static void test(int n){
+         if(n>2){
+             test(n-1);
+         }
+         System.out.print("n = "+n);
+     }
 }
 ~~~
 
 2. 阶乘问题
 ~~~java
-public static int factorial(int n){
-    if(n==1){
-        return 1;
-    }else{
-        return factorial(n-1)*n;
+class Factorial{
+    public static int factorial(int n){
+        if(n==1){
+            return 1;
+        }else{
+            return factorial(n-1)*n;
+        }
     }
 }
 ~~~
