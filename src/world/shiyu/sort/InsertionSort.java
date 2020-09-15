@@ -54,9 +54,9 @@ public class InsertionSort {
                 arr[insertIndex + 1] = arr[insertIndex]; //
                 insertIndex--;
             }
-            if(insertIndex + 1 == i){
-                arr[insertIndex + 1] = insertVal;
-            }
+
+            arr[insertIndex + 1] = insertVal;
+
             System.out.printf("第%d轮循环: %s",i,Arrays.toString(arr));
             System.out.println();
         }
