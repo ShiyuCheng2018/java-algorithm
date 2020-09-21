@@ -8,9 +8,9 @@ public class MergeSort {
 
         int arr[] = {83, 42, 56, 75, 12, 31, 67, 23};
         int temp[] = new int[arr.length]; // 归并排序需要一个额外的空间
-        System.out.println("原数组: "+ Arrays.toString(arr));
-        mergeSort(arr, 0, arr.length-1, temp);
-        System.out.println("合并后: "+ Arrays.toString(arr));
+        System.out.println("原数组: " + Arrays.toString(arr));
+        mergeSort(arr, 0, arr.length - 1, temp);
+        System.out.println("合并后: " + Arrays.toString(arr));
 
     }
 
@@ -94,11 +94,12 @@ public class MergeSort {
          * 第一次合并tempLeft = 0, right = 1 // tempLeft = 2, right = 3 // tempLeft = 0, right = 3
          * 最后一次tempLeft = 0, right = 7
          * */
-        System.out.println("compare arr[tempLeft]: " + arr[tempLeft] + " arr[right]: "+arr[right] );
+        System.out.println("compare arr[tempLeft]: " + arr[tempLeft] + " arr[right]: " + arr[right]);
         while (tempLeft <= right) {
             arr[tempLeft] = temp[t];
             t += 1;
             tempLeft += 1;
         }
+        System.out.println(Arrays.toString(arr));
     }
 }
