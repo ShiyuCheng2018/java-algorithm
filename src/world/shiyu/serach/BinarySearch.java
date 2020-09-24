@@ -1,4 +1,4 @@
-package world.shiyu.serach.images;
+package world.shiyu.serach;
 
 import java.util.ArrayList;
 import java.util.List;
