@@ -1,7 +1,44 @@
 package world.shiyu.hash;
 
+import java.util.Scanner;
+
 public class HashTableDemo {
     public static void main(String[] args) {
+        // 创建一个hash表
+        HashTable hashTable = new HashTable(7);
+
+        String key = "";
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("add: 添加雇员");
+            System.out.println("list: 显示雇员");
+            System.out.println("exit: 退出系统");
+            System.out.println();
+
+            System.out.print("请输入指令: ");
+            key = scanner.next();
+
+            switch (key) {
+                case "add":
+                    System.out.println("输入id:");
+                    int id = scanner.nextInt();
+                    System.out.println("输入名字:");
+                    String name = scanner.next();
+                    // 创建雇员
+                    Employee employee = new Employee(id, name);
+                    hashTable.add(employee);
+                    break;
+                case "list":
+                    hashTable.list();
+                    break;
+                case "exit":
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    break;
+            }
+        }
 
 
     }
@@ -9,14 +46,20 @@ public class HashTableDemo {
 
 }
 
-class HashTabl {
+class HashTable {
     private EmpLinkedList[] empLinkedLists;
     private int size;
 
-    public HashTabl(int size) {
+    public HashTable(int size) {
         this.size = size;
         // 初始化 empLinkedLists
         this.empLinkedLists = new EmpLinkedList[size];
+
+        /** !!! 初始化每条链表
+         * */
+        for(int i = 0; i < size; i++){
+            empLinkedLists[i] = new EmpLinkedList();
+        }
 
     }
 
@@ -31,8 +74,9 @@ class HashTabl {
     // 遍历所有到链表
     public void list() {
         for (int i = 0; i < size; i++) {
-            empLinkedLists[i].list();
+            empLinkedLists[i].list(i);
         }
+        System.out.println();
     }
 
     // 编写一个散列函数, 使用简单到取模法
@@ -86,18 +130,19 @@ class EmpLinkedList {
     }
 
     // 遍历链表到雇员信息
-    public void list() {
+    public void list(int index) {
         if (head == null) {
             // 空链表
-            System.out.println("当前链表为空");
+            System.out.println("第"+(index+1)+"条链表为空");
             return;
         }
 
-        System.out.println("当前链表到信息为： ");
+        System.out.print("第"+(index+1)+"条链表的信息为： ");
         Employee curEmp = head;
 
         while (true) {
             System.out.printf("=> id = %d name=%s", curEmp.id, curEmp.name);
+            System.out.println();
             if (curEmp.next == null) {
                 // 这是最后节点
                 break;
