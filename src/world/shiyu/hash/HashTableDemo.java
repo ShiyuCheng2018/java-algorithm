@@ -11,8 +11,10 @@ public class HashTableDemo {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            System.out.println();
             System.out.println("add: 添加雇员");
             System.out.println("list: 显示雇员");
+            System.out.println("find: 查找雇员");
             System.out.println("exit: 退出系统");
             System.out.println();
 
@@ -21,9 +23,9 @@ public class HashTableDemo {
 
             switch (key) {
                 case "add":
-                    System.out.println("输入id:");
+                    System.out.print("输入id: ");
                     int id = scanner.nextInt();
-                    System.out.println("输入名字:");
+                    System.out.print("输入名字: ");
                     String name = scanner.next();
                     // 创建雇员
                     Employee employee = new Employee(id, name);
@@ -31,6 +33,11 @@ public class HashTableDemo {
                     break;
                 case "list":
                     hashTable.list();
+                    break;
+                case "find":
+                    System.out.print("请输入要查找的id: ");
+                    id = scanner.nextInt();
+                    hashTable.findEmployeeById(id);
                     break;
                 case "exit":
                     scanner.close();
@@ -69,6 +76,19 @@ class HashTable {
         int empLinkedListIndex = hashFun(emp.id);
         // 将emp添加进对应到链表中
         empLinkedLists[empLinkedListIndex].add(emp);
+    }
+
+    // 根据输入的id查找雇员
+    public void findEmployeeById(int id){
+        int empLinkedListIndex = hashFun(id);
+        Employee employee = empLinkedLists[empLinkedListIndex].findEmployeeById(id);
+
+        if(employee != null){
+            System.out.printf("在第%d条列表中找到此雇员信息: id=%d name=%s", empLinkedListIndex+1, employee.id, employee.name);
+            System.out.println();
+        }else {
+            System.out.println("在hashTable中没有找到此雇员");
+        }
     }
 
     // 遍历所有到链表
@@ -129,6 +149,31 @@ class EmpLinkedList {
         curEmp.next = emp;
     }
 
+    // 根据id查找雇员
+    public Employee findEmployeeById(int id){
+        // 判断链表是否为空
+        if(this.head == null){
+            System.out.println("当前链表为空链表");
+            return null;
+        }
+
+        // 辅助指针
+        Employee curEmp = head;
+        while(true){
+            if(curEmp.id == id){
+                break; // 这是curEmp就指向要查找的雇员
+            }
+            if(curEmp.next == null){
+                // 说明遍历完当前列表没有找到该雇员
+                curEmp = null;
+                break;
+            }
+            curEmp = curEmp.next; // 后移
+        }
+
+        return curEmp;
+    }
+
     // 遍历链表到雇员信息
     public void list(int index) {
         if (head == null) {
@@ -150,4 +195,8 @@ class EmpLinkedList {
             curEmp = curEmp.next; // 后移遍历
         }
     }
+
+    /**
+     * TODO: 删除列表
+     * */
 }
