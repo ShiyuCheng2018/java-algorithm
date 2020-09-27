@@ -1,2 +1,2 @@
 ![bg](images/algorithm.png)
-# Algorithm in JAVA
+# The Algorithm in JAVA

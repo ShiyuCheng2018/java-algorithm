@@ -4,6 +4,35 @@ import java.awt.desktop.SystemSleepEvent;
 
 public class BinaryTreeDemo {
     public static void main(String[] args) {
+        BinaryTree binaryTree = new BinaryTree();
+
+        Node root = new Node(1, "Tiger");
+        Node node_2 = new Node(2, "Cat");
+        Node node_3 = new Node(3, "Dog");
+        Node node_4 = new Node(4, "Bird");
+        Node node_5 = new Node(5, "Panda");
+//       Node node_6 =new Node(6, "Griffie");
+//       Node node_7 = new Node(7, "Eagle");
+//       Node node_8 =new Node(8, "Rabbit");
+
+        // 手动创建二叉树
+        root.setLeft(node_2);
+        root.setRight(node_3);
+        node_3.setLeft(node_5);
+        node_3.setRight(node_4);
+        binaryTree.setRoot(root);
+
+        // test
+        System.out.println("前序遍历： "); // 1， 2，3，5, 4
+        binaryTree.preOrder();
+
+        // test
+        System.out.println("中序遍历： "); // 2, 1, 5, 3, 4
+        binaryTree.infixOrder();
+
+        // test
+        System.out.println("后序遍历： "); //  2, 5, 4, 3, 1
+        binaryTree.postOrder();
 
     }
 }
@@ -32,7 +61,7 @@ class BinaryTree {
     // 中序遍历
     public void infixOrder() {
         if (this.root != null) {
-            this.root.postOrder(); // 指向this.root
+            this.root.infixOrder(); // 指向this.root
         } else {
             System.out.println("二叉树为空，无法遍历");
         }
