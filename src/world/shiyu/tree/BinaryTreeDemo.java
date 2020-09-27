@@ -75,6 +75,30 @@ class BinaryTree {
             System.out.println("二叉树为空，无法遍历");
         }
     }
+
+    public Node preOrderSearch(int id) {
+        if (root != null) {
+            return root.preOrderSearch(id);
+        } else {
+            return null;
+        }
+    }
+
+    public Node infixOrderSearch(int id) {
+        if (root != null) {
+            return this.root.infixOrderSearch(id);
+        } else {
+            return null;
+        }
+    }
+
+    public Node postOrderSearch(int id) {
+        if (root != null) {
+            return this.root.postOrderSearch(id);
+        } else {
+            return null;
+        }
+    }
 }
 
 
@@ -174,5 +198,85 @@ class Node {
 
         // 输出父节点
         System.out.println(this);
+    }
+
+    // 前序遍历查找
+    public Node preOrderSearch(int id) {
+        // 先比较当前节点
+        if (this.id == id) {
+            return this;
+        }
+
+        // 判断当前节点的左子节点是否为空， 如果不为空则递归前序查找
+        // 如果左递归找到目标则返回
+        Node node = null;
+        if (this.left != null) {
+            node = this.left.preOrderSearch(id);
+        }
+
+        if (node != null) {
+            return node;
+        }
+
+        // 判断当前节点的右子节点是否为空， 如果不为空则递归前序查找
+        if (this.right != null) {
+            node = this.right.preOrderSearch(id);
+        }
+
+        return node;
+    }
+
+    // 中序遍历查找
+    public Node infixOrderSearch(int id) {
+        Node node = null;
+
+        if (this.left != null) {
+            node = this.left.infixOrderSearch(id);
+        }
+
+        if (node != null) {
+            return node;
+        }
+
+
+        if (this.id == id) {
+            return this;
+        }
+
+        if (this.right != null) {
+            node = this.right.infixOrderSearch(id);
+        }
+
+        return node;
+
+    }
+
+    // 后续遍历查找
+    public Node postOrderSearch(int id) {
+        Node node = null;
+
+        if (this.left != null) {
+            node = this.left.postOrderSearch(id);
+        }
+
+        if (node != null) {
+            return node;
+        }
+
+
+        if (this.right != null) {
+            node = this.right.postOrderSearch(id);
+        }
+
+        if (node != null) {
+            return node;
+        }
+
+
+        if (this.id == id) {
+            return this;
+        }
+        return node;
+
     }
 }
