@@ -34,6 +34,15 @@ public class BinaryTreeDemo {
         System.out.println("后序遍历： "); //  2, 5, 4, 3, 1
         binaryTree.postOrder();
 
+        System.out.println();
+        // 前序查找
+        Node resultNode = binaryTree.preOrderSearch(15);
+        if (resultNode != null) {
+            System.out.println("已找到节点: " + resultNode);
+        } else {
+            System.out.println("没有找到此节点");
+        }
+
     }
 }
 
