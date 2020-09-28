@@ -108,6 +108,19 @@ class BinaryTree {
             return null;
         }
     }
+
+    public void deleteNode(int id) {
+        if (root != null) {
+            // 立即判断root是否就是要删除节点
+            if (root.getId() == id) {
+                root = null; // 删除整个树
+            } else {
+                root.deleteNode(id);
+            }
+        } else {
+            System.out.println("空树， 无法进行删除操作！");
+        }
+    }
 }
 
 
@@ -286,6 +299,34 @@ class Node {
             return this;
         }
         return node;
+
+    }
+
+    /**
+     * 递归删除节点
+     * 1， 如果删除的节点为叶子节点， 则直接删除此节点
+     * 2， 如果删除的该节点为非叶子节点， 则删除该子树
+     */
+
+    public void deleteNode(int id) {
+
+        if (this.left != null && this.left.id == id) {
+            this.left = null;
+            return;
+        }
+
+        if (this.right != null && this.right.id == id) {
+            this.right = null;
+            return;
+        }
+
+        if (this.left != null) {
+            this.left.deleteNode(id);
+        }
+
+        if (this.right != null) {
+            this.right.deleteNode(id);
+        }
 
     }
 }
