@@ -18,15 +18,20 @@ public class ThreadedBianryTreeDemo {
         node_2.setRight(node_5);
         node_3.setLeft(node_6);
 
-        // 测试线索化
+        // 测试中序线索化
         ThreadedBinaryTree threadedBinaryTree = new ThreadedBinaryTree();
         threadedBinaryTree.setRoot(root);
-        threadedBinaryTree.threadedNodes();
+        threadedBinaryTree.infixThreadedNodes();
 
         // 测试： 以10号节点测试
         Node leftNode = node_5.getLeft();
+        System.out.println("\n测试线索化是否成功： ");
         System.out.println("10号节点的前驱节点是 = " + leftNode);
         System.out.println("10号节点的后驱节点是 = " + node_5.getRight());
+
+        // 线索化中序遍历
+        System.out.println("\n线索化中序遍历: ");
+        threadedBinaryTree.infixOrder();
 
     }
 
@@ -41,8 +46,8 @@ class ThreadedBinaryTree {
     // 为了实现线索化， 需要创建要给指向当前节点对前驱节点对指针。在递归进行线索化时， pre总是保存前一个节点
     private Node pre = null;
 
-    public void threadedNodes() {
-        this.threadedNodes(root);
+    public void infixThreadedNodes() {
+        this.infixThreadedNodes(root);
     }
 
     /**
@@ -50,7 +55,7 @@ class ThreadedBinaryTree {
      */
 
     // @node 就是当前需要线索化对节点
-    public void threadedNodes(Node node) {
+    public void infixThreadedNodes(Node node) {
         // 如果node == null, 不能线索化
 
         if (node == null) {
@@ -58,12 +63,12 @@ class ThreadedBinaryTree {
         }
 
         // 1， 先线索化左子树
-        threadedNodes(node.getLeft());
+        infixThreadedNodes(node.getLeft());
 
 
         /************* 2， !!! 线索化当前节点***************/
 
-        // 处理当前节点对前驱节点
+        // 处理当前节点的前驱节点
         if (node.getLeft() == null) {
             // 让当前节点对左指针指向前驱节点
             node.setLeft(pre);
@@ -84,7 +89,8 @@ class ThreadedBinaryTree {
         /************************************************/
 
         // 3， 线索化右子树
-        threadedNodes(node.getRight());
+        infixThreadedNodes(node.getRight());
+
 
     }
 
@@ -94,29 +100,37 @@ class ThreadedBinaryTree {
 
     // 前序遍历
     public void preOrder() {
-        if (this.root != null) {
-            this.root.preOrder(); // 指向this.root
-        } else {
-            System.out.println("二叉树为空，无法遍历");
-        }
+
     }
 
     // 中序遍历
     public void infixOrder() {
-        if (this.root != null) {
-            this.root.infixOrder(); // 指向this.root
-        } else {
-            System.out.println("二叉树为空，无法遍历");
+        // 定义一个变量， 临时存储当前节点， 从root开始
+        Node node = root;
+        while (node != null) {
+            /** 循环的找到leftType == 1的节点， 第一个找到就是8节点
+             后面随着遍历而变化， 因为当leftType == 1. 说明该节点是按照线索化处理后的有效节点*/
+            while (node.getLeftType() == 0) {
+                node = node.getLeft();
+            }
+            // 打印当前节点, 中序的第一个输出节点
+            System.out.println(node);
+            // 如果当前节点的右指针指向的是后继节点， 就一直输出, 为了输出左子树节点
+            while (node.getRightType() == 1) {
+                // 获取到当前节点的后继节点
+                node = node.getRight();
+                System.out.println(node);
+            }
+
+            // 替换这个遍历的节点去树的另一边
+            node = node.getRight();
+
         }
     }
 
     // 后序遍历
     public void postOrder() {
-        if (this.root != null) {
-            this.root.postOrder(); // 指向this.root
-        } else {
-            System.out.println("二叉树为空，无法遍历");
-        }
+
     }
 
     public Node preOrderSearch(int id) {
@@ -233,52 +247,6 @@ class Node {
                 '}';
     }
 
-    // 编写前序遍历
-    public void preOrder() {
-        System.out.println(this); // 先输出父节点
-
-        // 递归左子树前序遍历
-        if (this.left != null) {
-            this.left.preOrder();
-        }
-
-        // 递归右子树
-        if (this.right != null) {
-            this.right.preOrder();
-        }
-    }
-
-    // 中序遍历
-    public void infixOrder() {
-        // 递归左子树遍历
-        if (this.left != null) {
-            this.left.infixOrder();
-        }
-
-        // 输出父节点
-        System.out.println(this);
-
-        // 递归右子树
-        if (this.right != null) {
-            this.right.infixOrder();
-        }
-    }
-    // 后续遍历
-
-    public void postOrder() {
-        // 递归左子树
-        if (this.left != null) {
-            this.left.postOrder();
-        }
-
-        // 递归右子树
-        if (this.right != null) {
-            this.right.postOrder();
-        }
-
-        // 输出父节点
-        System.out.println(this);
-    }
 
     // 前序遍历查找
     public Node preOrderSearch(int id) {
