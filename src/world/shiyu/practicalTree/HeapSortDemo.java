@@ -38,9 +38,7 @@ public class HeapSortDemo {
         // 将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。
         for (int arrLength = arr.length - 1; arrLength > 0; arrLength--) {
             // 交换
-            temp = arr[arrLength];
-            arr[arrLength] = arr[0];
-            arr[0] = temp;
+            swap(arr, 0, arrLength);
             adjustHeap(arr, 0, arrLength); // 继续构建大顶堆
         }
 
@@ -59,7 +57,6 @@ public class HeapSortDemo {
      */
 
     public static void adjustHeap(int[] arr, int i, int length) {
-        int temp = arr[i];  //先取出当前元素的值， 保存在临时变量
         /** 开始调整\
          *  说明
          *  1. pointer = 1 * 2 + 1 * pointer 是指向i 节点的左子节点
@@ -71,13 +68,18 @@ public class HeapSortDemo {
                 pointer++; // pointer转向右子节点
             }
 
-            if (arr[pointer] > temp) { // （temp与最大的子节点对比), 如果子节点大于父节点
-                arr[i] = arr[pointer]; // 把较大的值赋值给当前节点
-                arr[pointer] = temp; // 将temp值放在调整后的位置
+            if (arr[pointer] > arr[i]) { // （local父节点与最大的子节点对比), 如果子节点大于父节点
+                swap(arr, i, pointer);
                 i = pointer; // !!! i 指向pointer, 继续循环比较。 因为排序后可能导致之前的排序结构混乱， i保存之前的pointer索引
             } else {
                 break; // !!!
             }
         }
+    }
+
+    private static void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
