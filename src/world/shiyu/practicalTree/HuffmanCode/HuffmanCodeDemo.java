@@ -7,21 +7,25 @@ public class HuffmanCodeDemo {
     public static void main(String[] args) {
         String text = "i like like like java do you like a java";
         byte[] textBytes = text.getBytes();
-        System.out.println("\n原bytes: " + Arrays.toString(textBytes) + "\n 原bytes长度： " + textBytes.length);
-
-        List<Node> nodes = getNodes(textBytes);
-        System.out.println("\nnodes: " + nodes);
-
-        Node HuffmanTree = createHuffmanTree(nodes);
-        System.out.println("\nHuffman Tree: ");
-        preOrder(HuffmanTree);
-
-
-        // 生成对应HuffmanCode
-        Map<Byte, String> huffmanCodes = getCodes(HuffmanTree);
-        System.out.println("\n生成的HuffmanCode 编码表: " + HuffmanCode);
-
-        byte[] huffmanCodeBytes = zip(textBytes, huffmanCodes);
+        /**
+         //        System.out.println("\n原bytes: " + Arrays.toString(textBytes) + "\n 原bytes长度： " + textBytes.length);
+         //
+         //        List<Node> nodes = getNodes(textBytes);
+         //        System.out.println("\nnodes: " + nodes);
+         //
+         //        Node HuffmanTree = createHuffmanTree(nodes);
+         //        System.out.println("\nHuffman Tree: ");
+         //        preOrder(HuffmanTree);
+         //
+         //
+         //        // 生成对应HuffmanCode
+         //        Map<Byte, String> huffmanCodes = getCodes(HuffmanTree);
+         //        System.out.println("\n生成的HuffmanCode 编码表: " + HuffmanCode);
+         //
+         //        byte[] huffmanCodeBytes = zip(textBytes, huffmanCodes);
+         //        System.out.println("\nhuffmanCodeBytes = " + Arrays.toString(huffmanCodeBytes));
+         */
+        byte[] huffmanCodeBytes = huffmanZip(textBytes);
         System.out.println("\nhuffmanCodeBytes = " + Arrays.toString(huffmanCodeBytes));
 
     }
@@ -174,6 +178,17 @@ public class HuffmanCodeDemo {
             index++;
         }
         return huffmanCodeBytes;
+    }
+
+    /**
+     * @param bytes 原始字符串对应的bytes数组
+     * @return 返回Huffman 处理后的byte[](压缩后)
+     */
+    private static byte[] huffmanZip(byte[] bytes) {
+        List<Node> nodes = getNodes(bytes);
+        Node HuffmanTree = createHuffmanTree(nodes);
+        Map<Byte, String> huffmanCodes = getCodes(HuffmanTree);
+        return zip(bytes, huffmanCodes);
     }
 
 
