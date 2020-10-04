@@ -31,6 +31,28 @@ public class HuffmanCodeDemo {
     }
 
     /**
+     * 将一个byte转成一个二进制到字符串
+     * @param b
+     * @param flag 标志是否需要补高位
+     * @return 是该b 对应到二进制到字符串 （注意按照补码返回）
+     * */
+    private static String byteToBitString(boolean flag, byte b){
+        // 使用一个变量保存b
+        int temp = b; // 将b转成int
+        if(flag){
+            temp |= 256; //  按位与256
+        }
+        String str = Integer.toBinaryString(temp); // 返回到是temp对应到二进制补码
+
+        if(flag){
+            return str.substring(str.length()-8);
+
+        }else {
+            return str;
+        }
+    }
+
+    /**
      * @param bytes
      * @return nodes, 返还列表包含所有由字符建造的node
      */
