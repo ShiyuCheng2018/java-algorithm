@@ -90,4 +90,44 @@ class Node {
                 "value=" + value +
                 '}';
     }
+
+    // 查找删除节点
+    public Node search(int value){
+        if(value == this.value){
+            // 找到该节点
+            return this;
+        }else if(value < this.value){
+            // 查找到值小于当前节点， 向左子树递归查找
+            if(this.left == null){
+                return null;
+            }
+            return this.left.search(value);
+        }else {
+            // 查找到值小于当前节点， 向右子树递归查找
+            if(this.right == null){
+                return null;
+            }
+            return this.search(value);
+        }
+    }
+
+    /**
+     * 查找要删除到父节点
+     * @param value 要找到节点到值
+     * @return 返回到是要删除到节点到父节点，如果没有返回null
+     * */
+    private Node searchParent(int value){
+        if((this.left != null && this.left.value == value) || (this.right != null && this.right.value == value)){
+            return this;
+        }else{
+            // 如果查找的值小于当前节点的值并且当前节点的左子节点不为空
+            if(value < this.value && this.left != null){
+                return this.left.searchParent(value);
+            }else if(value >= this.value && this.right != null){
+                return this.right.searchParent(value); // 向右子树递归查找
+            }else {
+                return null; // 没有找到父节点
+            }
+        }
+    }
 }
