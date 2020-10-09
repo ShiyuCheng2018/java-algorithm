@@ -2,7 +2,7 @@ package world.shiyu.practicalTree.AVL;
 
 public class AVLTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {4, 3, 6, 5, 7, 8};
+        int[] arr = {4, 3, 6, 5, 7, 8, 45, 12, 9, 10, 34, 23};
 
         // 创建AVL对象
         AVLTree avlTree = new AVLTree();
@@ -14,7 +14,7 @@ public class AVLTreeDemo {
         System.out.println("\n中序遍历: ");
         avlTree.infixOrder();
 
-        System.out.println("在没有在平衡处理之前: ");
+        System.out.println("在平衡处理之后: ");
         System.out.println("\n树的高度: " + avlTree.getRoot().height());
         System.out.println("树的左子树高度: " + avlTree.getRoot().leftHeight());
         System.out.println("树的右子树高度: " + avlTree.getRoot().rightHeight());
@@ -186,12 +186,27 @@ class Node {
 
         // 当添加完 一个节点后， 如果右子树的高度 - 左子树的高度 > 1, 左旋转
         if (rightHeight() - leftHeight() > 1) {
-            leftRotate();
+            if (right != null && right.leftHeight() > right.rightHeight()) {
+                right.rightHeight();
+                leftRotate();
+            } else {
+                leftRotate();
+            }
+            return;
         }
 
         // 但添加完一个节点后， 如果左子树的高度  - 右子树的高度 > 1, 右旋转
         if (leftHeight() - rightHeight() > 1) {
-            rightRotate();
+            // 如果左子树的右子树的高度大于它的左子树高度
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                // 先对当前节点的左子树， 左旋装
+                left.leftRotate();
+                // 在对当前节点进行右旋转
+                rightRotate();
+            } else {
+                rightRotate();
+            }
+            return;
         }
 
     }
