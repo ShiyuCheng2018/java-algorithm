@@ -1,13 +1,13 @@
 package world.shiyu.practicalTree.AVL;
 
 public class AVLTreeDemo {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int[] arr = {4, 3, 6, 5, 7, 8};
 
         // 创建AVL对象
         AVLTree avlTree = new AVLTree();
 
-        for(int each : arr){
+        for (int each : arr) {
             avlTree.add(new Node(each));
         }
 
@@ -15,9 +15,9 @@ public class AVLTreeDemo {
         avlTree.infixOrder();
 
         System.out.println("在没有在平衡处理之前: ");
-        System.out.println("\n树的高度: "+avlTree.getRoot().height());
-        System.out.println("树的左子树高度: "+avlTree.getRoot().leftHeight());
-        System.out.println("树的右子树高度: "+avlTree.getRoot().rightHeight());
+        System.out.println("\n树的高度: " + avlTree.getRoot().height());
+        System.out.println("树的左子树高度: " + avlTree.getRoot().leftHeight());
+        System.out.println("树的右子树高度: " + avlTree.getRoot().rightHeight());
 
     }
 }
@@ -184,6 +184,16 @@ class Node {
             }
         }
 
+        // 当添加完 一个节点后， 如果右子树的高度 - 左子树的高度 > 1, 左旋转
+        if (rightHeight() - leftHeight() > 1) {
+            leftRotate();
+        }
+
+        // 但添加完一个节点后， 如果左子树的高度  - 右子树的高度 > 1, 右旋转
+        if (leftHeight() - rightHeight() > 1) {
+            rightRotate();
+        }
+
     }
 
     public void infixOrder() {
@@ -266,6 +276,35 @@ class Node {
             return 0;
         }
         return right.height();
+
+    }
+
+    // 左旋转
+    private void leftRotate() {
+
+        // 创建新节点, 以当前根节点的值
+        Node newNode = new Node(value);
+        // 把新节点的左子树设置为当前节点的左子树
+        newNode.left = left;
+        // 把新节点的右子树设置为当前节点的右子树的左子树
+        newNode.right = right.left;
+        // 当前节点的值换成右子节点的值
+        value = right.value;
+        // 把当前节点的右子树设置成当前节点右子树的右子树
+        right = right.right;
+        // 把当前节点的左子树设置成新节点
+        left = newNode;
+
+    }
+
+    private void rightRotate() {
+
+        Node newNode = new Node(value);
+        newNode.right = right;
+        newNode.left = left.right;
+        value = left.value;
+        left = left.left;
+        right = newNode;
 
     }
 }
