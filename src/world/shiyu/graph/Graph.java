@@ -2,6 +2,7 @@ package world.shiyu.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Graph {
 
@@ -35,7 +36,11 @@ public class Graph {
         graph.showGraph();
         // 深度遍历
         System.out.print("\n深度遍历: ");
-        graph.dfs();
+//        graph.dfs();
+
+        // 广度遍历
+        System.out.print("\n广度遍历: ");
+        graph.bsf();
 
     }
 
@@ -102,6 +107,50 @@ public class Graph {
         }
     }
 
+    // 对一个节点进行广度优先遍历的方法
+    private void bfs(boolean[] isVisited, int i) {
+        int u; // 表示队列的头节点的对应下标
+        int w; // 邻接点w
+        // 队列， 记录节点访问顺序
+        LinkedList queue = new LinkedList();
+
+        // 访问节点， 输出节点信息
+        System.out.print(getValueByIndex(i) + " -> ");
+        // 标记为已访问
+        isVisited[i] = true;
+        // 将节点加入队列
+        queue.addLast(i);
+
+        while (queue.isEmpty()) {
+            // 取出队列头节点下标
+            u = (Integer) queue.removeFirst();
+            // 得到第一个邻接点的下标w
+            w = getFirstNeighbor(u);
+
+            while (w != -1) {
+                // 找到， 检测是否访问过
+                if (isVisited[w]) {
+                    System.out.print(getValueByIndex(w) + " -> ");
+                    isVisited[w] = true;
+                    // 入队列
+                    queue.addLast(w);
+                }
+                // 以u为前驱点， 找w后面的下一个邻接点
+                w = getNextNeighbor(u, w); // 体现出广度优先
+
+            }
+        }
+    }
+
+    // 遍历所有的节点进行广度优先搜索
+    public void bsf() {
+        for (int i = 0; i < getNumOfVertex(); i++) {
+            if (!isVisited[i]) {
+                bfs(isVisited, i);
+            }
+        }
+    }
+
 
     // 插入节点
     public void insertVertix(String vertex) {
@@ -122,7 +171,7 @@ public class Graph {
     }
 
     // 图中常用的方法， 返回节点的个数
-    public int getNumOfEdges() {
+    public int getNumOfVertex() {
         return vertexList.size();
     }
 
